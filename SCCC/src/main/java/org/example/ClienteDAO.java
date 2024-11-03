@@ -110,9 +110,31 @@ public class ClienteDAO implements AutoCloseable {
             System.err.println("Erro ao obter todos os clientes: " + e.getMessage());
             throw new RuntimeException("Erro ao obter todos os clientes", e);
         }
-        return clientes;
-    }
+        return clientes;    }
 
+        public Cliente obterClientePorId(int id) {
+            String sql = "SELECT id, nome, email, telefone, endereco, cpf FROM clientes WHERE id = ?";
+            try (PreparedStatement statement = conexao.prepareStatement(sql)) {
+                statement.setInt(1, id);
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        return new Cliente(
+                            result.getInt("id"),
+                            result.getString("nome"),
+                            result.getString("email"),
+                            result.getString("telefone"),
+                            result.getString("endereco"),
+                            result.getString("cpf")
+                        );
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println("Erro ao obter cliente por ID: " + e.getMessage());
+                throw new RuntimeException("Erro ao obter cliente por ID", e);
+            }
+            return null;
+        }
+        
     public void alterarCliente(int id, String nome, String email, String telefone, String endereco) {
         StringBuilder sqlBuilder = new StringBuilder("UPDATE clientes SET ");
         List<Object> parametros = new ArrayList<>();
@@ -206,4 +228,5 @@ public class ClienteDAO implements AutoCloseable {
             System.err.println("Erro ao fechar conexão com o banco de dados: " + e.getMessage());
         }
     }
+
 }

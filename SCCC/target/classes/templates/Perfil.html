@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/main/resources/static/style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Perfil do Cliente</title>
+    <script src="./script_perfil.js" defer></script> <!-- Carrega o script de JavaScript -->
 </head>
 <body>
     <div class="container">
@@ -40,7 +41,7 @@
                 <input type="text" id="servicos" name="servicos" required>
             </div>
             <div class="perfil-botao">
-                <button type="submit" class="btn-azul">Alocar serviço</button>
+                <button type="button" class="btn-azul" id="alterar-cliente-btn">Alterar Cliente</button>
             </div>
         </form>
     </div>
